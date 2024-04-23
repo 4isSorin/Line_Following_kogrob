@@ -26,4 +26,4 @@ Ezután a friss felületre telepítettük a feladat megoldásához szükséges s
 - Írjunk ilyen "érdekességek" részt a hibákról amik felemrültek? (mondjuk valszeg ez felesleges)
 - Feladat megoldásának menetét leírni, csak konkrétan hogy milyen scripteket használtunk, melyik mit csinál, elmesélni a betanítást + pár kép és kész
 ## 4. Eredmények
-[Youtube videó link](https://www.youtube.com/watch?v=jogtECytDSQ&t=114s)
+[Youtube videó link](https://www.youtube.com/watch?v=jogtECytDSQ&t=0s)
