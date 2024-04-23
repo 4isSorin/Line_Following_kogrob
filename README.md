@@ -121,7 +121,7 @@ Ezután a `/turtlebot3/turtlebot3_description/urdf/turtlebot3_burger.gazebo.xacr
   </gazebo>
 ...
 ```
-## A tanításhoz használandó képek elkészítése
+## 3. A tanításhoz használandó képek elkészítése
 A jól kondícionált tudás eléréséhez nagyméretű tanító adathatlmazra lesz szükség. Ha minden különböző vonalszínt és lehetséges trajektóriát szeretnénk reprezentálni változatos orientációkból, ahhoz a legkézenfekvőbb megoldás a pálya teljes bejárása közbeni fényképes dokumentálás. A robot kézi manóverezéséhez a távirányító node használható, mely a `W,A,S,D,X` billentyűk általi irányítást teszi lehetővé.
 ```console
 roslaunch turtlebot3_teleop turtlebot3_teleop_key.launch
@@ -241,26 +241,30 @@ cvThreadHandle.start()
 # Spin until ctrl + c
 rospy.spin()
 ```
-[tanításhoz készített képek beszúrása]
-Az elkészített felvételeket színtől és cselekvésti tervtől függően 10 mappába soroltuk, melyek a következőek:
--
+- Egy pillanatkép az említett dokumentálási módszer menetéről:
+> ![Screenshot from 2024-04-11 18-56-40](https://github.com/4isSorin/Line_Following_kogrob/assets/167373493/2e4e80d7-1b2c-4756-a0ca-fad96196be46)
 
-## A neurális háló létrehozása
+- Az elkészített felvételeket színtől és cselekvésti tervtől függően 10 mappába soroltuk, melyek a következőek:
+> ![kép](https://github.com/4isSorin/Line_Following_kogrob/assets/167373493/9bcad1ca-1b42-4f9b-ad1f-9bed72927dfd)
+- A mappák tartalma a következő képpen nézett ki:
+> ![kép](https://github.com/4isSorin/Line_Following_kogrob/assets/167373493/d5064184-552a-4fb7-a6b0-76abbc00d37a)
+
+## 4. A neurális háló létrehozása
 A hálózatunk egy LeNet-5 típusú konvulúciós neurális háló, melynek bemenetei 24x24 pixeles RGB-képek. A tanítás a `train_network.py` szkript segítségével törénik:
 ```python
 # import the necessary packages
 from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Activation, Flatten, Dense, Conv2D, MaxPooling2D
+from tensorflow.keras.layers import Activation, Flatten, Dense, Conv2D, MaxPooling2D, LeakyReLU
 from tensorflow.keras.preprocessing.image import img_to_array
 from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.callbacks import ReduceLROnPlateau, ModelCheckpoint
+from tensorflow.keras.utils import to_categorical
 from tensorflow.keras import __version__ as keras_version
 from tensorflow.compat.v1 import ConfigProto
 from tensorflow.compat.v1 import InteractiveSession
 from tensorflow.random import set_seed
 import tensorflow as tf
 from sklearn.model_selection import train_test_split
-from keras.utils import to_categorical
 from imutils import paths
 import numpy as np
 import random
@@ -292,23 +296,27 @@ def build_LeNet(width, height, depth, classes):
     inputShape = (height, width, depth)
 
     # first set of CONV => RELU => POOL layers
+    
+#    model.add(Activation("relu"))  Ez volt eredetileg az aktivacios fuggveny
+#    model.add(LeakyReLU(alpha=0.1))  Ez lett az uj
+    
     model.add(Conv2D(20, (5, 5), padding="same", input_shape=inputShape))
-    model.add(Activation("relu"))
+    model.add(LeakyReLU(alpha=0.1))
     model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
 
     # second set of CONV => RELU => POOL layers
     model.add(Conv2D(50, (5, 5), padding="same"))
-    model.add(Activation("relu"))
+    model.add(LeakyReLU(alpha=0.1))
     model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
 
     # first (and only) set of FC => RELU layers
     model.add(Flatten())
     model.add(Dense(500))
-    model.add(Activation("relu"))
+    model.add(LeakyReLU(alpha=0.1))
 
     # softmax classifier
     model.add(Dense(classes))
-    model.add(Activation("softmax"))
+    model.add(Activation("softmax"))	# softmax helyett sigmoid
 
     # return the constructed network architecture
     return model
@@ -334,14 +342,26 @@ for imagePath in imagePaths:
     # labels list
     label = imagePath.split(os.path.sep)[-2]
     print("Image: %s, Label: %s" % (imagePath, label))
-    if label == 'forward':
+    if label == 'fw_blue':
         label = 0
-    elif label == 'right':
-        label = 1
-    elif label == 'left':
-        label = 2
-    else:
+    elif label == 'fw_green':
         label = 3
+    elif label == 'fw_yellow':
+        label = 6
+    elif label == 'right_blue':
+        label = 2
+    elif label == 'right_yellow':
+        label = 8
+    elif label == 'right_green':
+        label = 5
+    elif label == 'left_yellow':
+        label = 7
+    elif label == 'left_blue':
+        label = 1
+    elif label == 'left_green':
+        label = 4
+    else:
+        label = 9
     labels.append(label)
     
     
@@ -349,23 +369,23 @@ for imagePath in imagePaths:
 data = np.array(data, dtype="float") / 255.0
 labels = np.array(labels)
  
-# partition the data into training and testing splits using 75% of
-# the data for training and the remaining 25% for testing
-(trainX, testX, trainY, testY) = train_test_split(data, labels, test_size=0.25, random_state=42)# convert the labels from integers to vectors
-trainY = to_categorical(trainY, num_classes=4)
-testY = to_categorical(testY, num_classes=4)
+# partition the data into training and testing splits using 80% of
+# the data for training and the remaining 20% for testing
+(trainX, testX, trainY, testY) = train_test_split(data, labels, test_size=0.2, random_state=42)# convert the labels from integers to vectors
+trainY = to_categorical(trainY, num_classes=10)
+testY = to_categorical(testY, num_classes=10)
 
 
 # initialize the number of epochs to train for, initial learning rate,
 # and batch size
-EPOCHS  = 40
+EPOCHS  = 100	# Eredtileg 40
 INIT_LR = 0.001
 DECAY   = INIT_LR / EPOCHS
-BS      = 32
+BS      = 80		# Batch size eredetileg 32
 
 # initialize the model
 print("[INFO] compiling model...")
-model = build_LeNet(width=image_size, height=image_size, depth=3, classes=4)
+model = build_LeNet(width=image_size, height=image_size, depth=3, classes=10)
 opt = Adam(learning_rate=INIT_LR, decay=DECAY)
 model.compile(loss="binary_crossentropy", optimizer=opt, metrics=["accuracy"])
  
@@ -401,12 +421,12 @@ plt.savefig('model_training')
 plt.show()
 ```
 A tanítási folyamat eredményét az epochszám-pontosság grafikon ábrázolja.
-[kép a grafikonunkról]
+- [kép a grafikonunkról]
 
 - nano .bashrc
 - Elkészítettük a catkin workspace-ünket, ami az egyszerűség kedvéért a `bme_catkin_ws` nevet kapta.
-## 3. Feladat megoldása
+## 5. Feladat megoldása
 - Írjunk ilyen "érdekességek" részt a hibákról amik felemrültek? (mondjuk valszeg ez felesleges)
 - Feladat megoldásának menetét leírni, csak konkrétan hogy milyen scripteket használtunk, melyik mit csinál, elmesélni a betanítást + pár kép és kész
-## 4. Eredmények
+## 6. Eredmények
 [Youtube videó link](https://www.youtube.com/watch?v=jogtECytDSQ&t=0s)
