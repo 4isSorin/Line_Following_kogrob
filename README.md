@@ -2,8 +2,10 @@
 Multiple colored line following with neural network using ROS and turtlebot
 ## Tartalomjegyzék
 1. [Előkészületek](##1.-előkészületek)    
-3. [Feladat kidolgozása és megoldása](##3.-Feladat-kidolgozása-és-megoldása)
+2. [Pálya és kamera modellezése](##2.-Pálya-és-kamera-modellezése)
+3. [Feladat megoldásának menete](##3.-Feladat-megoldásának-menete)
 4. [Eredmények](##4.-Eredmények)  
+
 ## 1. Előkészületek
 - A projekt első lépéseként telepítettük az `Ubuntu 20.04`-verziószámú operációs rendszert `Oracle VM VirtualBox` szoftver segítségével virtuális környezetben.
 > ![kép](https://github.com/4isSorin/Line_Following_kogrob/assets/167373493/5ffaaaae-4031-40e2-b34c-9afc5df87947)
@@ -617,7 +619,7 @@ plt.legend()
 plt.savefig('model_training')
 plt.show()
 ```
-A tanítási folyamat eredményét az epochszám-pontosság grafikon ábrázolja.
+- A tanítási folyamat eredményét az epochszám-pontosság grafikon ábrázolja.
 > ![kép](https://github.com/4isSorin/Line_Following_kogrob/assets/167373493/58727cab-95ec-4698-9cee-618d5aedf0a9)
 > > A tanítás annál jobb minél jobban közelíti a narancsárga görbét a piros illetve a kéket a zöld
 
@@ -838,8 +840,8 @@ cvThreadHandle.start()
 rospy.spin()
 ```
 
-## 6. Eredmények
+## 4. Eredmények
 - A fájl az elvárásaink szerint teljesített: A robot felismerte a különböző színeket és ennek megfelelően különböző sebsségekkel haladt az adott pályarészeken. Itt fontos megjegyezni, hogy ugyanezt a rendszert ha más virtuális pályára, vagy valóságos pályára tanítanak be akkor az feltehetően képes hasonlóan precíz viselkedésre mint az általunk szimulált környezetben.
 - A teljes rendszer működése az alábbi Youtube videón tekinthető meg:
 
-<a href="https://www.youtube.com/watch?v=jogtECytDSQ">![kép](https://github.com/4isSorin/Line_Following_kogrob/assets/167373493/753f4b4a-638b-466c-8554-abd3c4667d93)</a>
+<a href="https://www.youtube.com/watch?v=jogtECytDSQ">![kép](https://github.com/4isSorin/Line_Following_kogrob/assets/167373493/c59e7185-27f9-43be-9907-779edbcfed48)</a>
