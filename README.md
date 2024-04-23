@@ -122,7 +122,7 @@ Ezután a `/turtlebot3/turtlebot3_description/urdf/turtlebot3_burger.gazebo.xacr
 ...
 ```
 ## A tanításhoz használandó képek elkészítése
-- A jól kondícionált tudás eléréséhez nagyméretű tanító adathatlmazra lesz szükség. Ha minden különböző vonalszínt és lehetséges trajektóriát szeretnénk reprezentálni változatos orientációkból, ahhoz a legkézenfekvőbb megoldás a pálya teljes bejárása közbeni fényképes dokumentálás. A robot kézi manóverezéséhez a távirányító node használható, mely a `W,A,S,D,X` billentyűk általi irányítást teszi lehetővé.
+A jól kondícionált tudás eléréséhez nagyméretű tanító adathatlmazra lesz szükség. Ha minden különböző vonalszínt és lehetséges trajektóriát szeretnénk reprezentálni változatos orientációkból, ahhoz a legkézenfekvőbb megoldás a pálya teljes bejárása közbeni fényképes dokumentálás. A robot kézi manóverezéséhez a távirányító node használható, mely a `W,A,S,D,X` billentyűk általi irányítást teszi lehetővé.
 ```console
 roslaunch turtlebot3_teleop turtlebot3_teleop_key.launch
 ```
@@ -241,6 +241,7 @@ cvThreadHandle.start()
 # Spin until ctrl + c
 rospy.spin()
 ```
+[tanítási képek beszúrása]
 - nano .bashrc
 - Elkészítettük a catkin workspace-ünket, ami az egyszerűség kedvéért a `bme_catkin_ws` nevet kapta.
 ## 3. Feladat megoldása
