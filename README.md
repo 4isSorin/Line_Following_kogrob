@@ -18,7 +18,7 @@ Ezután a friss felületre telepítettük a feladat megoldásához szükséges s
 - Mielőtt továbbléptünk volna, tisztáznunk kellett, hogy pontosan milyen célt szeretnénk elérni a projekt során a vonalkövetés témakörön belül. A választás arra esett, hogy a robotnak képesnek kell lennie neurális hálót használva többszínű vonallal ellátott pályát követni úgy, hogy meg is különböztesse a tanított színeket és különböző színek esetén különböző sebességgel haladjon.
 - Elkészítettük a catkin workspace-ünket, ami az egyszerűség kedvéért a `bme_catkin_ws` nevet kapta. Az említett könyvtárba helyeztük a továbbiakban a projekthez szükséges fájlokat.
 ### Automatikus parancsok
-- A `.bashrc` egy olyan fájl, ami minden terminál indjtásakor automatikusan végrehajtódik, tehát nem kell többé maunálisan futtatgatnunk ezeket a parancsokat. Mi az órai anyagban megtalálható fájl módosított verzióját használtuk:
+- A `.bashrc` egy olyan fájl, ami minden terminál indításakor automatikusan végrehajtódik, tehát nem kell többé maunálisan futtatgatnunk ezeket a parancsokat. Mi az órai anyagban megtalálható fájl módosított verzióját használtuk:
 ```bash
 # ~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
@@ -217,7 +217,7 @@ echo "================================================="
 - A vonalkövetéshez elengedhetetlen volt egy saját pálya, melyen betaníthatjuk és tesztelhetjük a robotot. Ezt a pályát `Blender 4.0` segítségével készítettük el.
 > ![kép](https://github.com/4isSorin/Line_Following_kogrob/assets/167373493/bc0be3e7-94a3-49f5-baa3-ff3c2224ecf9)
 > > Kész pálya három különböző színnel
-- A pályaát collada (.dae) formátumba exportáltuk ki, ugyanis ez kedvező lesz a továbbiakban a Gazebo-ba való importálás szempontjából.
+- A pályát collada (.dae) formátumba exportáltuk ki, ugyanis ez kedvező lesz a továbbiakban a Gazebo-ba való importálás szempontjából.
 - A `gazebo` parancs segítségével megnyílik a környezet, majd az `Edit` menüpont alatt kiválasztjuk a `Model Editor`-t, melyen belül a `Custom Shapes` `Add` gombjára kattintva betallózzunk a létrehozott fájlt. A `Link Inspector` menüt előhozva célszerű a `Kinematic` pontot True értékre állítani, majd a modellt elmenteni. A pályán látható színek egyenlőre nem egyeznek meg a Blender-ben létrehozottakkal, azonban ez kiküszöbölhető a `model.sdf` fájljának módosításával a következőképpen: a `visual` szekcióban a `material` részhez tartozó sorokat kitöröljük. Ezután már a Gazebo környezetében is pontosan látszanak a beállított színek.
 
 ### Kamera hozzáadása a robothoz
@@ -323,7 +323,7 @@ Ezután a `/turtlebot3/turtlebot3_description/urdf/turtlebot3_burger.gazebo.xacr
 ```
 ## 3. A feladat megoldásának menete
 ### A tanításhoz használandó képek elkészítése
-A jól kondícionált tudás eléréséhez nagyméretű tanító adathatlmazra lesz szükség. Ha minden különböző vonalszínt és lehetséges trajektóriát szeretnénk reprezentálni változatos orientációkból, ahhoz a legkézenfekvőbb megoldás a pálya teljes bejárása közbeni fényképes dokumentálás. A robot kézi manóverezéséhez a távirányító node használható, mely a `W,A,S,D,X` billentyűk általi irányítást teszi lehetővé.
+A jól kondícionált tudás eléréséhez nagyméretű tanító adathatlmazra lesz szükség. Ha minden különböző vonalszínt és lehetséges trajektóriát szeretnénk reprezentálni változatos orientációkból, ahhoz a legkézenfekvőbb megoldás a pálya teljes bejárása közbeni fényképes dokumentálás. A robot kézi manőverezéséhez a távirányító node használható, mely a `W,A,S,D,X` billentyűk általi irányítást teszi lehetővé.
 ```console
 roslaunch turtlebot3_teleop turtlebot3_teleop_key.launch
 ```
