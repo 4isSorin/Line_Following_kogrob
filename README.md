@@ -18,7 +18,7 @@ Multiple colored line following with neural network using ROS and turtlebot
 - A vonalkövetéshez elengedhetetlen volt egy saját pálya amin betaníthatjuk és tesztelhetjük a továbbiakban a robotot. Ezt a pályát `Blender 4.0` segítségével készítettük el.
 > ![kép](https://github.com/4isSorin/Line_Following_kogrob/assets/167373493/bc0be3e7-94a3-49f5-baa3-ff3c2224ecf9)
 > > Kész pálya három különböző színnel
-. A pályaát collada (.dae) formátumba exportáltuk ki, ugyanis ez kedvező lesz a továbbiakban a Gazebo-ba való importálás szempontjából.
+- A pályaát collada (.dae) formátumba exportáltuk ki, ugyanis ez kedvező lesz a továbbiakban a Gazebo-ba való importálás szempontjából.
 - Gazeboba valo beillesztes
 - nano .bashrc
 - Elkészítettük a catkin workspace-ünket, ami az egyszerűség kedvéért a `bme_catkin_ws` nevet kapta.
