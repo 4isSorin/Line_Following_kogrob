@@ -837,6 +837,9 @@ cvThreadHandle.start()
 # Spin until Ctrl+C
 rospy.spin()
 ```
-- 
+
 ## 6. Eredmények
-[Youtube videó link](https://www.youtube.com/watch?v=jogtECytDSQ&t=0s)
+- A fájl az elvárásaink szerint teljesített: A robot felismerte a különböző színeket és ennek megfelelően különböző sebsségekkel haladt az adott pályarészeken. Itt fontos megjegyezni, hogy ugyanezt a rendszert ha más virtuális pályára, vagy valóságos pályára tanítanak be akkor az feltehetően képes hasonlóan precíz viselkedésre mint az általunk szimulált környezetben.
+- A teljes rendszer működése az alábbi Youtube videón tekinthető meg:
+
+<a href="https://www.youtube.com/watch?v=jogtECytDSQ">![kép](https://github.com/4isSorin/Line_Following_kogrob/assets/167373493/753f4b4a-638b-466c-8554-abd3c4667d93)</a>
