@@ -623,7 +623,7 @@ plt.show()
 ```
 - A tanítási folyamat eredményét az epochszám-pontosság grafikon ábrázolja.
 > ![kép](https://github.com/4isSorin/Line_Following_kogrob/assets/167373493/58727cab-95ec-4698-9cee-618d5aedf0a9)
-> > A tanítás annál jobb minél jobban közelíti a narancsárga görbét a piros illetve a kéket a zöld
+> > A tanítás annál hatékonyabb, minél jobban közelíti a narancssárga görbét a piros görbe illetve a kék görbét a zöld.
 
 - Miután a tanítás elvártnak megfelelő görbéket eredményez meg lehet kezdeni ennek gyakorlatban történő tesztelését. Ehhez az általunk testreszabott `line_follower_cnn.py`fájl külön terminálban történő futtatása szükséges:
 ```python
